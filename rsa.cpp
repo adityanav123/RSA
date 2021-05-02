@@ -66,39 +66,7 @@ ulli extended_euclidean(ulli a, ulli b)  {
 	return y_old;
 }
 
-ulli gcdUtility(ulli a, ulli b, ulli *x, ulli *y) {
-	
-	if(a == 0) {
-		*x = 0; *y = 1;
-		return b;
-	}
 
-	ulli xt, yt;  // intermidiate calculations.
-
-	// recursion 
-	ulli g = gcdUtility(b % a, a, &xt, &yt);
-
-	ulli quotient = (b / a);
-
-	*x = yt - quotient * xt;
-	*y = xt;
-
-	return g; // returning gcd, does'nt really matter here.
-}
-
-ulli extended_euclidean1(ulli a, ulli b)
-{
-	// source - pkc video - mit opencourseware
-	ulli x, y;
-	ulli g = gcdUtility(a, b, &x, &y); // calculates the table values.
-
-	// x and y are calculated.
-
-	// negative inverse is to be handled.
-	ulli d = ((x % b) + b) % b;
-
-	return d;
-}
 
 ulli generate_sk(ulli e, ulli phi_n) {
 	// d.e = 1 mod(phi(n))
@@ -114,7 +82,7 @@ ulli generate_sk(ulli e, ulli phi_n) {
 ulli encrypt(ulli m) {
 	ulli p, q;
 
-	int bit = 4; 
+	int bit = 15; 
 	// how many bit the numbers should be ? 
 
 	// generating prime - p and q where p != q.
@@ -148,7 +116,7 @@ ulli encrypt(ulli m) {
 	secret_key = d;
 	cout << "d : " << d << "\n";
 
-	cout << "Encrypting - " << m << "\n";
+	cout << "Message Entered was - " << m << "\n";
 	ulli enc = fast_power(m, e, n); 
 	return enc;
 }
@@ -164,17 +132,24 @@ void show_keys() {
 	cout << "[ secret key : " << secret_key << " ]\n";
 }
 int main(){
-	ulli message = 10;
-
+	
+	cout << "\n\nRSA Algorithm.";
+	
+	ulli message = 20; // default message.
+	cout << "\nEnter Your message : ";
+	cin >> message;
 	ulli enc = encrypt(message); // 4 - 4 bit message.
 
 	show_keys();
 
-	cout << "encrypted value for " << message << " is : " << enc << "\n"; 
+	cout << "encrypted value for message is : " << enc << "\n"; 
 
 	decrypt (enc , secret_key, public_key_n);
 		
 
-	// decrypt (enc , 15873, public_key_n);
+	// decrypt (enc , 15873, public_key_n); // debug
+	
+	
+	// interesting observation - after going to 16 bits, the value gets too high to be calculated by the data types multiplications.
 	return 0;
 }
