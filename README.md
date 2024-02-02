@@ -27,6 +27,8 @@ To run the program, simply execute the generated executable in your terminal:
 ./rsa
 ```
 
+Upon execution, the program will prompt you for a message input. Enter the message you wish to encrypt, and the program will proceed with the RSA encryption and decryption process, outputting the encrypted message followed by the decrypted message, ensuring the process works correctly.
+
 ### Note
 - No special input arguments are required when executing the program. It is designed to request the necessary input (the message for encryption) directly from the user at the start.
 - Ensure that both miller_rabin.cpp and rsa.cpp are located in the same directory to avoid compilation errors, as the RSA implementation relies on the Miller-Rabin primality test defined in miller_rabin.cpp.
